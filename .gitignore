@@ -1,11 +1,27 @@
 # Replace EXAMPLE with your site name.
+# symlinks to other projects #
+##############################
+sites/all/modules/migrate_uhs_policy
 
 # Drupal #
 ##########
-# we dont' version control the submodules
-cas
-cas_attributes
-ldap
+# Ignore paths that contain user-generated content.
+sites/*/files
+sites/*/private
+/cache
+# Local stack development
+sites/*.localhost/*
+
+# security review
+security_review/IGNOREME.txt
+security_review/file_write_test*
+
+# UCB Drupal apps
+# Since these are installed and updated via Apps in the install profile,
+# we don't want to version control them here
+/sites/all/modules/ucb_cas
+/sites/all/modules/ucb_envconf
+
 
 # Packages #
 ############
@@ -25,11 +41,15 @@ ldap
 
 # OS generated files #
 ######################
-.DS_Store
+.DS_Store*
 ehthumbs.db
 Icon?
 Thumbs.db
 ._*
+
+# IntelliJIDEA phpStorm #
+#########################
+.idea
 
 # Eclipse files #
 #################
@@ -42,8 +62,33 @@ dummy.php
 ###############
 *~
 \#*#
-README.html
+\.\#
 
-# phpStorm #
-############
-.idea/*
+# Vim generated files #
+######################
+*.un~
+
+# SASS #
+##########
+.sass-cache
+
+# WHITELIST #
+#############
+# If you don't whitelist these and the .gitignore is present when you git add,
+# you will not have some D7 core files under version control
+
+# Make sure the things like modules/file/icons are not ignored by 'Icon?' above
+!modules/*/icons
+# .sql and .gz that are part of D7 core
+!modules/update/tests/*.gz
+!modules/simpletest/tests/*/*.gz
+!modules/simpletest/files/*.sql
+
+#parking symlink for files
+!sites/pt.berkeley.edu/files
+
+# Be very carful about adding code the contains .git/ from other projects
+# this will be see as a submodule by Pantheon and you will end up with an
+# empty folder.  -BW
+# composer
+# sites/all/libraries/composer/kriswallsmith/buzz/.git
